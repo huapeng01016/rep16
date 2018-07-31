@@ -17,18 +17,10 @@
 - dyndoc 
 - putpdf 
 
-#  A hands-on session
-
-- load and examine data
-- run analysis
-- save commands to a script
-- run script
-- write report 
-
 # putdocx
 
-- [Word document](./examples/fuel_consumption.docx) 
-- [source do-file](./examples/fuel_consumption.do)
+- [Word文件](./examples/fuel_consumption.docx) 
+- [do-file](./examples/fuel_consumption.do)
 
 # Generate tables from saved results 
 

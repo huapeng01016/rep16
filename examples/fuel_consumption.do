@@ -7,37 +7,31 @@ putdocx text ("A fuel consumption study of Stata's auto dataset")
 putdocx paragraph
 putdocx text ("We conduct a study of the fuel consumption of cars in Stata's auto dataset.") 
 
-sysuse auto, clear
+use auto_zh, clear
 
 putdocx paragraph, style("Heading2")
-putdocx text ("Perform data transformation")
+putdocx text ("生成数据")
 
 putdocx paragraph
-putdocx text ("We generate a variable, ")
-putdocx text ("fuel"),  bold
-putdocx text (", in the unit of Gallons per 100 Miles ")  
-putdocx text ("based on the variable ")
-putdocx text ("mpg"), bold 
-putdocx text (".") 
+putdocx text ("从变量里程生成新变量")
+putdocx text ("油耗"),  bold
+putdocx text ("(公升每一百公里)。")  
 
-putdocx paragraph, font("Courier New", 12)
-putdocx text (". generate fuel = 100/mpg"), linebreak
-putdocx text (`". label variable fuel "Fuel consumption (Gallons per 100 Miles)""')
+putdocx paragraph
+putdocx text (". generate 油耗 = 100/里程"), linebreak
+putdocx text (`". label variable 油耗 "油量消耗(公升每一百公里)""')
 
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
+generate 油耗 = 100/里程
+label variable 油耗 "油量消耗(公升每一百公里)"
 
 putdocx paragraph, style("Heading2")
-putdocx text ("Examine the variables")
-
-putdocx paragraph
-putdocx text ("We examine variables for possible errors in the data.")
+putdocx text ("检验数据")
 
 preserve
-describe fuel weight, replace clear
+describe 油耗 重量, replace clear
 
-putdocx paragraph, style("Heading3")
-putdocx text ("Describe the variables")
+putdocx paragraph, style("Heading2")
+putdocx text ("描述变量")
 
 		// generate the describe table from dataset in memory
 sort name
@@ -48,20 +42,21 @@ putdocx table tbl_desc = data("name type format vallab varlab"), ///
 	border(insideH, nil) 	/// 
 	border(end, nil)
 
-putdocx table tbl_desc(1, 1) = ("Name")
-putdocx table tbl_desc(1, 2) = ("Storage type")
-putdocx table tbl_desc(1, 3) = ("Display format")
-putdocx table tbl_desc(1, 4) = ("Value label")
-putdocx table tbl_desc(1, 5) = ("Variable label")
+putdocx table tbl_desc(1, 1) = ("变量名")
+putdocx table tbl_desc(1, 2) = ("类型")
+putdocx table tbl_desc(1, 3) = ("格式")
+putdocx table tbl_desc(1, 4) = ("值标签")
+putdocx table tbl_desc(1, 5) = ("标签")
 putdocx table tbl_desc(1, .), border(bottom, single)
 
 restore
 
-		// add a summarize table from saved results
-putdocx paragraph, style("Heading3")
-putdocx text ("Summarize the variables")
 
-tabstat fuel weight, stats(n mean sd min max) save
+		// add a summarize table from saved results
+putdocx paragraph, style("Heading2")
+putdocx text ("摘要统计")
+
+tabstat 油耗 重量, stats(n mean sd min max) save
 matrix stats = r(StatTotal)'
 
 putdocx table tbl_summ = matrix(stats),  ///
@@ -72,29 +67,29 @@ putdocx table tbl_summ = matrix(stats),  ///
         border(insideH, nil)             ///
         border(end, nil)
 
-putdocx table tbl_summ(1, 1) = ("Variable")
-putdocx table tbl_summ(1, 2) = ("Observations")
-putdocx table tbl_summ(1, 3) = ("Mean")
-putdocx table tbl_summ(1, 4) = ("Standard Deviation")
-putdocx table tbl_summ(1, 5) = ("Min")
-putdocx table tbl_summ(1, 6) = ("Max")
+putdocx table tbl_summ(1, 1) = ("变量")
+putdocx table tbl_summ(1, 2) = ("观测")
+putdocx table tbl_summ(1, 3) = ("均值")
+putdocx table tbl_summ(1, 4) = ("标准差")
+putdocx table tbl_summ(1, 5) = ("最小值")
+putdocx table tbl_summ(1, 6) = ("最大值")
 putdocx table tbl_summ(1, .), border(bottom, single)
 
-summarize weight
+summarize 重量
 local min : display %4.2f `r(min)'
 local max : display %4.2f `r(max)'
 local range : display %4.2f `r(max)'-`r(min)'
 
 putdocx paragraph
-putdocx text ("The variable ")
-putdocx text ("weight"), bold 
-putdocx text (" has minimum value `min', maximum value `max', ")
-putdocx text ("and range `range'.")
+putdocx text ("变量")
+putdocx text ("重量"), bold 
+putdocx text ("的最小值`min',最大值`max',")
+putdocx text ("极差`range'.")
 
 putdocx paragraph, style("Heading2")
 putdocx text ("Plot fuel consumption and vehicle weight")
 
-scatter fuel weight, mcolor(blue%50)
+scatter 油耗 重量, mcolor(blue%50)
 graph export temp.png, replace 
 putdocx paragraph, halign(center)
 putdocx image temp.png, width(4) linebreak
@@ -103,7 +98,7 @@ putdocx text ("Figure 1: scatter plot fuel consumption and weight"), bold
 putdocx paragraph, style("Heading2")
 putdocx text ("Explore relationship between fuel consumption and vehicle weight - linear regression")
 
-regress fuel weight
+regress 油耗 重量
 
 		// add the regression table
 putdocx table tbl_reg = etable
@@ -130,9 +125,9 @@ putdocx text ("Produce a table from -estimates table-")
 putdocx paragraph
 putdocx text ("We list the results from two regressions.")
 
-quietly regress fuel weight gear turn
+quietly regress 油耗 重量 变速比 转弯半径
 estimates store model1
-quietly regress fuel weight gear turn foreign
+quietly regress 油耗 重量 变速比 转弯半径 国籍
 estimates store  model2
 estimates table model1 model2, 	///
 	varlabel b(%7.4f) 			/// 
@@ -152,14 +147,14 @@ putdocx text ("-esttab- is a popular community-contributed command which generat
 preserve
 cap erase esttab_ex.csv
 eststo clear
-eststo, title("Fuel consumption"): quietly regress fuel weight gear turn
-eststo, title("Fuel consumption"): quietly regress fuel weight gear turn foreign
+eststo, title("Fuel consumption"): quietly regress 油耗 重量 变速比 转弯半径
+eststo, title("Fuel consumption"): quietly regress 油耗 重量 变速比 转弯半径 国籍
 esttab using esttab_ex.csv, 		///
 	b(3) t(2) r2(2) ar2(2)			/// 
 	plain star notes par label 		/// 
 	title(Regression table using -esttab-) width(80%)
 
-import delimited using esttab_ex.csv, clear
+import delimited using esttab_ex.csv, encoding("utf-8") clear
 putdocx table d = data(_all), border(all,nil)
 putdocx table d(1,.), border(bottom,double)
 putdocx table d(3,.), border(bottom, dotted)
@@ -176,7 +171,7 @@ putdocx text ("Relationship based on car type - a nested table")
 
 putdocx table tbl_l = (4, 2), border(all, nil) border(top, double) border(bottom, double)
 
-tabstat fuel weight if foreign, stats(n mean sd min max) save
+tabstat 油耗 重量 if 国籍, stats(n mean sd min max) save
 matrix stats = r(StatTotal)'
 putdocx table tbl_summ1 = matrix(stats),  ///
 		memtable						  ///	
@@ -195,7 +190,7 @@ putdocx table tbl_summ1(1, 5) = ("Min")
 putdocx table tbl_summ1(1, 6) = ("Max")
 putdocx table tbl_summ1(1, .), border(bottom, dashed) valign(bottom)
 
-tabstat fuel weight if !foreign, stats(n mean sd min max) save
+tabstat 油耗 重量 if !国籍, stats(n mean sd min max) save
 matrix stats = r(StatTotal)'
 putdocx table tbl_summ2 = matrix(stats),  ///
 		memtable						  ///	
@@ -221,9 +216,9 @@ putdocx table tbl_l(1, 2)  = ("Domestic"), halign(center)
 putdocx table tbl_l(2, 1)  = table(tbl_summ1)
 putdocx table tbl_l(2, 2)  = table(tbl_summ2)
 
-scatter fuel weight if foreign, mcolor(blue%50)
+scatter 油耗 重量 if 国籍, mcolor(blue%50)
 graph export temp_f.png, replace 
-scatter fuel weight if !foreign, mcolor(blue%50)
+scatter 油耗 重量 if !国籍, mcolor(blue%50)
 graph export temp_d.png, replace 
 
 putdocx table tbl_l(3, 1)  = image(temp_f.png)
@@ -231,15 +226,15 @@ putdocx table tbl_l(3, 2)  = image(temp_d.png)
 
 cap erase esttab_ex.csv
 eststo clear
-eststo, title("Foreign") : quietly regress fuel weight gear turn if foreign
-eststo, title("Domestic"): quietly regress fuel weight gear turn if !foreign
+eststo, title("Foreign") : quietly regress 油耗 重量 变速比 转弯半径 if 国籍 
+eststo, title("Domestic"): quietly regress 油耗 重量 变速比 转弯半径 if !国籍
 esttab using esttab_ex.csv, 		///
 	b(3) t(2) r2(2) ar2(2)			/// 
 	plain star par label 			///
 	wide							/// 
 	nomtitles
 
-import delimited using esttab_ex.csv, clear
+import delimited using esttab_ex.csv, encoding("utf-8") clear
 putdocx table d = data(_all), memtable border(all,nil)
 putdocx table d(1,.), border(bottom, dashed)
 
@@ -251,13 +246,13 @@ putdocx paragraph, style("Heading2")
 putdocx text ("Output from Stata commands")
 
 log using outputs.log, text replace nomsg
-sysuse auto, clear
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
-regress fuel weight
+use auto_zh, clear
+generate 油耗 = 100/里程
+label variable 油耗 "油量消耗(公升每一百公里)"
+regress 油耗 重量
 mata:
-st_view(Y=.,.,("fuel"), .)
-st_view(X=.,.,("weight"), .)
+st_view(Y=.,.,("油耗"), .)
+st_view(X=.,.,("重量"), .)
 X=X,J(rows(X),1,1)
 b=invsym(X'*X)*X'*Y
 v=((Y- X*b)'*(Y- X*b))/(rows(X)-cols(X))*invsym(X'*X) 
