@@ -1,23 +1,21 @@
 # Incorporating Stata into reproducible documents
 
-##  [Hua Peng@StataCorp][hpeng]
-### [https://huapeng01016.github.io/webinar2/](https://huapeng01016.github.io/webinar2/)
+##  [彭华@StataCorp][hpeng]
+### 2017 Stata 中国用户大会 
+### [https://huapeng01016.github.io/China18/](https://huapeng01016.github.io/China18/)
 
-# Reproducible research and reproducible documents
+# Stata可重复研究与报告
 
-## Stata is good at reproducible research
+## Stata可重复研究
 
-- Manually performed data management and analysis can be easily turned into 
-  scripts (do-files) 
-- Scripts from 30 years ago still run and produce the same results today and will do 
-  the same in the future
-- Datasets created 30 years ago can be read today and in the future
- 
-## Stata 15 added commands to automate report generation
+- 简单收集手工操作到do-file  
+- 不同版本间良好的数据和脚本文件兼容性(version control)
 
-- putdocx - create Word documents
-- dyndoc - convert dynamic Markdown documents to web pages
-- putpdf - create PDF files
+## Stata 15增加的可重复研究与报告工具 
+
+- putdocx 
+- dyndoc 
+- putpdf 
 
 #  A hands-on session
 
