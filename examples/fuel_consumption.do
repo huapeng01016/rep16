@@ -87,16 +87,16 @@ putdocx text ("的最小值`min',最大值`max',")
 putdocx text ("极差`range'.")
 
 putdocx paragraph, style("Heading2")
-putdocx text ("Plot fuel consumption and vehicle weight")
+putdocx text ("图: 油耗与重量")
 
 scatter 油耗 重量, mcolor(blue%50)
 graph export temp.png, replace 
 putdocx paragraph, halign(center)
 putdocx image temp.png, width(4) linebreak
-putdocx text ("Figure 1: scatter plot fuel consumption and weight"), bold
+putdocx text ("图1: 油耗与重量"), bold
 
 putdocx paragraph, style("Heading2")
-putdocx text ("Explore relationship between fuel consumption and vehicle weight - linear regression")
+putdocx text ("研究油耗与重量关系 - 线性回归")
 
 regress 油耗 重量
 
@@ -147,12 +147,12 @@ putdocx text ("-esttab- is a popular community-contributed command which generat
 preserve
 cap erase esttab_ex.csv
 eststo clear
-eststo, title("Fuel consumption"): quietly regress 油耗 重量 变速比 转弯半径
-eststo, title("Fuel consumption"): quietly regress 油耗 重量 变速比 转弯半径 国籍
+eststo, title("油耗"): quietly regress 油耗 重量 变速比 转弯半径
+eststo, title("油耗"): quietly regress 油耗 重量 变速比 转弯半径 国籍
 esttab using esttab_ex.csv, 		///
 	b(3) t(2) r2(2) ar2(2)			/// 
 	plain star notes par label 		/// 
-	title(Regression table using -esttab-) width(80%)
+	title(线性回归表使用esttab) width(80%)
 
 import delimited using esttab_ex.csv, encoding("utf-8") clear
 putdocx table d = data(_all), border(all,nil)
@@ -167,7 +167,7 @@ restore
 
 putdocx sectionbreak, landscape
 putdocx paragraph, style("Heading2")
-putdocx text ("Relationship based on car type - a nested table")
+putdocx text ("不同国籍车辆对比")
 
 putdocx table tbl_l = (4, 2), border(all, nil) border(top, double) border(bottom, double)
 
@@ -183,11 +183,11 @@ putdocx table tbl_summ1 = matrix(stats),  ///
         border(end, nil)
 
 putdocx table tbl_summ1(1, 1) = ("")
-putdocx table tbl_summ1(1, 2) = ("Obs")
-putdocx table tbl_summ1(1, 3) = ("Mean")
-putdocx table tbl_summ1(1, 4) = ("SD")
-putdocx table tbl_summ1(1, 5) = ("Min")
-putdocx table tbl_summ1(1, 6) = ("Max")
+putdocx table tbl_summ1(1, 2) = ("观测")
+putdocx table tbl_summ1(1, 3) = ("均值")
+putdocx table tbl_summ1(1, 4) = ("标准差")
+putdocx table tbl_summ1(1, 5) = ("最小值")
+putdocx table tbl_summ1(1, 6) = ("最大值")
 putdocx table tbl_summ1(1, .), border(bottom, dashed) valign(bottom)
 
 tabstat 油耗 重量 if !国籍, stats(n mean sd min max) save
@@ -202,17 +202,17 @@ putdocx table tbl_summ2 = matrix(stats),  ///
         border(end, nil)
 
 putdocx table tbl_summ2(1, 1) = ("")
-putdocx table tbl_summ2(1, 2) = ("Obs")
-putdocx table tbl_summ2(1, 3) = ("Mean")
-putdocx table tbl_summ2(1, 4) = ("SD")
-putdocx table tbl_summ2(1, 5) = ("Min")
-putdocx table tbl_summ2(1, 6) = ("Max")
+putdocx table tbl_summ2(1, 2) = ("观测")
+putdocx table tbl_summ2(1, 3) = ("均值")
+putdocx table tbl_summ2(1, 4) = ("标准差")
+putdocx table tbl_summ2(1, 5) = ("最小值")
+putdocx table tbl_summ2(1, 6) = ("最大值")
 putdocx table tbl_summ2(1, .), border(bottom, dashed) valign(bottom)
 putdocx table tbl_summ2(2, 1) = ("")
 putdocx table tbl_summ2(3, 1) = ("")
 
-putdocx table tbl_l(1, 1)  = ("Foreign"), halign(center)
-putdocx table tbl_l(1, 2)  = ("Domestic"), halign(center)
+putdocx table tbl_l(1, 1)  = ("国外"), halign(center)
+putdocx table tbl_l(1, 2)  = ("国内"), halign(center)
 putdocx table tbl_l(2, 1)  = table(tbl_summ1)
 putdocx table tbl_l(2, 2)  = table(tbl_summ2)
 
@@ -243,7 +243,7 @@ putdocx table tbl_l(4, 1) = table(d)
 
 putdocx sectionbreak
 putdocx paragraph, style("Heading2")
-putdocx text ("Output from Stata commands")
+putdocx text ("Stata命令输出")
 
 log using outputs.log, text replace nomsg
 use auto_zh, clear

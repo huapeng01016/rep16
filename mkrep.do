@@ -16,7 +16,7 @@ cd examples
      	replace
 	dynpandoc fuel_cc.txt, saving(fuel_pandoc.docx) from(markdown) /// 
      	pargs("--reference-doc=reference.docx") replace
-	//dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf) from(markdown) replace
+	dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf) from(markdown) replace
 	do auto_78.do
 	do etable_1.do
 	do etable_2.do
