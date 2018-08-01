@@ -19,13 +19,11 @@ set linesize 80
 <</dd_do>>
 
 
-# A fuel consumption study of Stata's auto dataset
-
-We conduct a study of the fuel consumption of cars in Stata's auto dataset. 
+# Stata车辆数据文件中车型的重量和油耗之间关系的对比和分析
 
 ~~~~
 <<dd_do>>
-sysuse auto, clear
+use auto_zh, clear
 <</dd_do>>
 ~~~~
 

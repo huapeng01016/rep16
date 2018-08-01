@@ -12,11 +12,6 @@ cd examples
 	dyndoc fuel_consumption.txt, replace 
 	do fuel_consumption.do
 	dyndoc fuel_consumption.txt todo, saving(fuel_consumption_todo.html) replace 
-	dynpandoc fuel_cc.txt, saving(fuel_pandoc.html) from(markdown) /// 
-     	replace
-	dynpandoc fuel_cc.txt, saving(fuel_pandoc.docx) from(markdown) /// 
-     	pargs("--reference-doc=reference.docx") replace
-	dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf) from(markdown) replace
 	do auto_78.do
 	do etable_1.do
 	do etable_2.do
