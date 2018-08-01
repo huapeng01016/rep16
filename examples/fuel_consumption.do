@@ -152,10 +152,12 @@ eststo, title("油耗"): quietly regress 油耗 重量 变速比 转弯半径 �
 esttab using esttab_ex.csv, 		///
 	b(3) t(2) r2(2) ar2(2)			/// 
 	plain star notes par label 		/// 
-	title(线性回归表使用esttab) width(80%)
+	width(80%)
 
 import delimited using esttab_ex.csv, encoding("utf-8") clear
 putdocx table d = data(_all), border(all,nil)
+putdocx table d(1, .), addrows(1, before)
+putdocx table d(1, 1) = ("线性回归表使用esttab")
 putdocx table d(1,.), border(bottom,double)
 putdocx table d(3,.), border(bottom, dotted)
 putdocx table d(1,1), colspan(3) halign(center)
