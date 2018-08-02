@@ -6,19 +6,6 @@ putdocx text ("油耗与重量关系研究")
 
 use auto_zh, clear
 
-putdocx paragraph, style("Heading2")
-putdocx text ("生成数据")
-
-putdocx paragraph
-putdocx text ("从变量里程生成新变量油耗(公升每一百公里)。")  
-
-putdocx paragraph
-putdocx text (". generate 油耗 = 100/里程"), linebreak
-putdocx text (`". label variable 油耗 "油量消耗(公升每一百公里)""')
-
-generate 油耗 = 100/里程
-label variable 油耗 "油量消耗(公升每一百公里)"
-
 preserve
 describe 油耗 重量, replace clear
 
@@ -232,8 +219,6 @@ putdocx text ("Stata命令输出")
 
 log using outputs.log, text replace nomsg
 use auto_zh, clear
-generate 油耗 = 100/里程
-label variable 油耗 "油量消耗(公升每一百公里)"
 regress 油耗 重量
 mata:
 st_view(Y=.,.,("油耗"), .)

@@ -17,10 +17,18 @@
 - dyndoc 
 - putpdf 
 
+#  A hands-on session
+
+- load and examine data
+- run analysis
+- save commands to a script
+- run script
+- write report 
+
 # putdocx
 
-- [Word文件](./examples/fuel_consumption.docx) 
-- [do-file](./examples/fuel_consumption.do)
+- [Word document](./examples/fuel_consumption.docx) 
+- [source do-file](./examples/fuel_consumption.do)
 
 # Generate tables from saved results 
 
@@ -303,6 +311,28 @@ that use [pandoc](http://pandoc.org) to convert Markdown documents:
 - markstat 
 - markdoc 
 - webdoc 
+
+# Use pandoc instead of Stata's **markdown** command
+
+## From a single [dynamic document](./examples/fuel_cc.txt), we may produce
+
+- [web page](./examples/fuel_pandoc.html) 
+- [Word document](./examples/fuel_pandoc.docx)
+- [PDF document](./examples/fuel_pandoc.pdf)
+
+## The commands used are 
+~~~~
+	// web page
+dynpandoc fuel_cc.txt, saving(fuel_pandoc.html) /// 
+		from(markdown) replace	
+	// docx
+dynpandoc fuel_cc.txt, saving(fuel_pandoc.docx) /// 
+		from(markdown) replace 					/// 
+     	pargs("--reference-doc=reference.docx") 
+	// PDF
+dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf)  /// 
+		from(markdown) replace
+~~~~
 
 # Recap
 
