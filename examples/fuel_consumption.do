@@ -2,10 +2,7 @@ putdocx clear
 putdocx begin
 
 putdocx paragraph, style("Heading1")
-putdocx text ("A fuel consumption study of Stata's auto dataset")
-
-putdocx paragraph
-putdocx text ("We conduct a study of the fuel consumption of cars in Stata's auto dataset.") 
+putdocx text ("油耗与重量关系研究")
 
 use auto_zh, clear
 
@@ -13,9 +10,7 @@ putdocx paragraph, style("Heading2")
 putdocx text ("生成数据")
 
 putdocx paragraph
-putdocx text ("从变量里程生成新变量")
-putdocx text ("油耗"),  bold
-putdocx text ("(公升每一百公里)。")  
+putdocx text ("从变量里程生成新变量油耗(公升每一百公里)。")  
 
 putdocx paragraph
 putdocx text (". generate 油耗 = 100/里程"), linebreak
@@ -23,9 +18,6 @@ putdocx text (`". label variable 油耗 "油量消耗(公升每一百公里)""')
 
 generate 油耗 = 100/里程
 label variable 油耗 "油量消耗(公升每一百公里)"
-
-putdocx paragraph, style("Heading2")
-putdocx text ("检验数据")
 
 preserve
 describe 油耗 重量, replace clear
@@ -107,41 +99,32 @@ matrix define eb = e(b)
 
 putdocx paragraph
 local eb11 : display %6.4f eb[1,1]
-if `eb11' < 0 {
-putdocx text ("The regression shows that for every unit increase in weight, a ")
-putdocx text ("-`eb11'"), italic 
-putdocx text (" unit decrease in fuel consumption is predicted.")  
-}
-else {
-putdocx text ("The regression shows that for every unit increase in weight, a ")
-putdocx text ("`eb11'"), italic
-putdocx text (" unit increase in fuel consumption is predicted.")  
-}
+putdocx text ("线性回归结果显示重量每增加一百公斤,每百公里油耗增加")
+local ohfuel = `eb11'*100
+putdocx text ("`ohfuel'"), italic 
+putdocx text ("公升。")
 
 putdocx pagebreak
 putdocx paragraph, style("Heading2")
-putdocx text ("Produce a table from -estimates table-")
-
-putdocx paragraph
-putdocx text ("We list the results from two regressions.")
+putdocx text ("用-estimates table-对比线性回归结果")
 
 quietly regress 油耗 重量 变速比 转弯半径
-estimates store model1
+estimates store 模型1
 quietly regress 油耗 重量 变速比 转弯半径 国籍
-estimates store  model2
-estimates table model1 model2, 	///
+estimates store  模型2
+estimates table 模型1 模型2, 	///
 	varlabel b(%7.4f) 			/// 
 	stats(N r2 r2_a) star
 
 putdocx table tbl_est = etable, width(60%) halign(center)
+putdocx table tbl_est(1, 1) = ("")
 
 putdocx pagebreak
 putdocx paragraph, style("Heading2")
 putdocx text ("Produce a table from community-contributed -esttab-")
 
 putdocx paragraph
-putdocx text ("We list the results from the same two regressions as above using -esttab- and -putdocx-. ")
-putdocx text ("-esttab- is a popular community-contributed command which generates tables for report.")
+putdocx text ("用-esttab-对比线性回归结果")
 
 		//table from esttab
 preserve
