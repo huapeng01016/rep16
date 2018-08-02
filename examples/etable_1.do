@@ -1,15 +1,12 @@
 putdocx clear 
 putdocx begin
 
-sysuse auto, clear
-
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
+use auto_zh, clear
 
 putdocx paragraph, style("Heading1")
-putdocx text ("Produce a table from regression results")
+putdocx text ("线性回归结果")
 
-regress fuel weight
+regress 油耗 重量
 
 putdocx table tbl_est = etable
 

@@ -1,19 +1,16 @@
 putdocx clear 
 putdocx begin
 
-sysuse auto, clear
-
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
+sysuse auto_zh, clear
 
 putdocx paragraph, style("Heading1")
-putdocx text ("Produce a table from -estimates table-")
+putdocx text ("-estimates table-")
 
-quietly regress fuel weight gear turn
-estimates store model1
-quietly regress fuel weight gear turn foreign
-estimates store  model2
-estimates table model1 model2, 	///
+quietly regress 油耗 重量 变速比 转弯半径
+estimates store 模型1
+quietly regress 油耗 重量 变速比 转弯半径 国籍
+estimates store  模型2
+estimates table 模型1 模型2, 	///
 	varlabel b(%7.4f) 			/// 
 	stats(N r2 r2_a) star
 

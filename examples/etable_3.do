@@ -1,16 +1,13 @@
 putdocx clear 
 putdocx begin
 
-sysuse auto, clear
-
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
+sysuse auto_zh, clear
 
 putdocx paragraph, style("Heading1")
-putdocx text ("Produce a table from margins")
+putdocx text ("margins")
 
-regress mpg weight i.foreign i.rep78
-margins foreign rep78 
+regress 油耗 重量 i.国籍 i.维修记录78
+margins 国籍 维修记录78
 
 putdocx table tbl_marg = etable
 
