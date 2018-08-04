@@ -14,7 +14,7 @@ eststo, title("模型 2"): quietly regress 油耗 重量 变速比 转弯半径 
 esttab using esttab_ex.csv, 		///
 	b(3) t(2) r2(2) ar2(2)			/// 
 	plain star notes par label 		/// 
-	title(Regression table using -esttab-) width(80%)
+	title(esttab生成表格) width(80%)
 
 import delimited using esttab_ex.csv, encoding("utf-8") clear
 putdocx table tbl_data = data(_all)
