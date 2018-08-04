@@ -82,28 +82,18 @@
 </ul>
 </section>
 </section>
-<section id="a-hands-on-session" class="slide level1">
-<h1>A hands-on session</h1>
-<ul>
-<li>load and examine data</li>
-<li>run analysis</li>
-<li>save commands to a script</li>
-<li>run script</li>
-<li>write report</li>
-</ul>
-</section>
 <section id="putdocx" class="slide level1">
 <h1>putdocx</h1>
 <ul>
-<li><a href="./examples/fuel_consumption.docx">Word document</a></li>
-<li><a href="./examples/fuel_consumption.do">source do-file</a></li>
+<li><a href="./examples/fuel_consumption.docx">Word文件</a></li>
+<li><a href="./examples/fuel_consumption.do">do-file</a></li>
 </ul>
 </section>
-<section id="generate-tables-from-saved-results" class="slide level1">
-<h1>Generate tables from saved results</h1>
-<section id="from-estimation-command" class="level2">
-<h2>From estimation command</h2>
-<pre><code>regress fuel weight
+<section id="使用stata命令结果产生表格" class="slide level1">
+<h1>使用Stata命令结果产生表格</h1>
+<section id="估计命令结果表格" class="level2">
+<h2>估计命令结果表格</h2>
+<pre><code>regress 油耗 重量
 putdocx table tbl_reg = etable</code></pre>
 <ul>
 <li><a href="./examples/etable_1.docx">Word document</a></li>

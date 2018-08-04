@@ -17,93 +17,83 @@
 - dyndoc 
 - putpdf 
 
-#  A hands-on session
-
-- load and examine data
-- run analysis
-- save commands to a script
-- run script
-- write report 
-
 # putdocx
 
-- [Word document](./examples/fuel_consumption.docx) 
-- [source do-file](./examples/fuel_consumption.do)
+- [Word文件](./examples/fuel_consumption.docx) 
+- [do-file](./examples/fuel_consumption.do)
 
-# Generate tables from saved results 
+# 使用Stata命令结果产生表格 
 
-## From estimation command
+## 估计命令结果表格
 
 ~~~~
-regress fuel weight
+regress 油耗 重量
 putdocx table tbl_reg = etable
 ~~~~
 
-- [Word document](./examples/etable_1.docx) 
-- [source do-file](./examples/etable_1.do)
+- [Word文件](./examples/etable_1.docx) 
+- [do-file](./examples/etable_1.do)
 
-## From **margins**
+## **margins**
 
 ~~~~
-regress fuel weight i.foreign i.rep78
-margins foreign rep78 
+regress 油耗 重量 i.国籍 i.维修记录78
+margins 国籍 维修记录78 
 putdocx table tbl_marg = etable
 ~~~~
 
-- [Word document](./examples/etable_3.docx) 
-- [source do-file](./examples/etable_3.do)
+- [Word文件](./examples/etable_3.docx) 
+- [do-file](./examples/etable_3.do)
 
 
-## From **estimates table** 
+## **estimates table** 
 
 ~~~~
-quietly regress fuel weight gear turn
-estimates store model1
-quietly regress fuel weight gear turn foreign
-estimates store model2
-estimates table model1 model2, b(%7.4f) stats(N r2 r2_a) star
+quietly regress 油耗 重量 变速比 转弯半径
+estimates store 模型1
+quietly regress 油耗 重量 变速比 转弯半径 国籍
+estimates store  模型2
+estimates table 模型1 模型2, 	///
+	varlabel b(%7.4f) 			/// 
+	stats(N r2 r2_a) star
 putdocx table tbl_est = etable
 ~~~~
 
-- [Word document](./examples/etable_4.docx) 
+- [Word文件](./examples/etable_4.docx) 
 - [source do-file](./examples/etable_4.do)
 
 
-## From dataset
+## 从dataset产生表格
 
 ~~~~
 putdocx table tbl_data = data(_all)
 ~~~~
 
-- [Word document](./examples/data_table.docx) 
-- [source do-file](./examples/data_table.do)
+- [Word文件](./examples/data_table.docx) 
+- [do-file](./examples/data_table.do)
 
 
-## Change table styles and layout 
+## 改变表格格式外观 
 
 ~~~~
-		// add a table without borders
+		// 去除边界
 putdocx table tbl_data_1 = data(_all), border(all,nil)
-		// add a double width line border 
-		// at the bottom of the first row
+		//  改变第一行边界
 putdocx table tbl_data_1(1,.), border(bottom,double)
 putdocx table tbl_data_1(3,.), border(bottom, dotted)
-		// make the first cell of 
-		// the first row span 3 columns
+		// 扩展第一格占三列 
 putdocx table tbl_data_1(1,1), colspan(3) halign(center)
 putdocx table tbl_data_1(14,.), border(top,dotted)
 putdocx table tbl_data_1(17,.), border(top,double)
-		// make the first cells of 17th and 18th 
-		// rows span 3 columns, also make the contents 
-		// of the cells left aligned and italic  
+		// 扩展17，18行第一格占三列，对齐左侧， 斜体 
 putdocx table tbl_data_1(17,1), colspan(3) halign(left) italic
 putdocx table tbl_data_1(18,1), colspan(3) halign(left) italic
 ~~~~
 
-## After change table styles and layout
+## 结果
 
-- [Word document](./examples/data_table_1.docx) 
-- [source do-file](./examples/data_table_1.do)
+- [Word文件](./examples/data_table_1.docx) 
+- [do-file](./examples/data_table_1.do)
 
 ## Nested table
 
