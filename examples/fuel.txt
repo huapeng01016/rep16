@@ -1,33 +1,24 @@
-# A fuel consumption study of Stata's auto dataset
+# 油耗与重量关系研究
 
-We conduct a study of the fuel consumption of cars in Stata's auto dataset. 
 ~~~~
 <<dd_do>>
-sysuse auto, clear
+use auto_zh, clear
 <</dd_do>>
 ~~~~
 
-We generate a variable, **fuel**, that measures the fuel consumption rate in the unit of 
-Gallons per 100 Miles.  
+## 用散点图显示油耗与重量关系 
 ~~~~
 <<dd_do>>
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
-<</dd_do>>
-~~~~
-
-## Explore relationship between fuel consumption and vehicle weight 
-~~~~
-<<dd_do>>
-scatter fuel weight, mcolor(blue%50)
+scatter 油耗 重量, mcolor(blue%50)
 <</dd_do>>
 ~~~~
 
 <<dd_graph: saving("sc_fuel.svg") alt("scatter fuel weight") replace height(400)>>
 
+## 用线性回归研究油耗与重量关系 
 ~~~~
 <<dd_do>>
-regress fuel weight
+regress 油耗 重量
 <</dd_do>>
 ~~~~
 
@@ -35,6 +26,5 @@ regress fuel weight
 matrix eb = e(b)
 <</dd_do>>
 
-The regression shows that for every unit increase in weight, a 
-<<dd_display:%9.4f eb[1,1]>> unit increase in fuel consumption is predicted.
+线性回归结果显示重量每增加一百公斤,每百公里油耗增加<<dd_display:%9.4f eb[1,1]*100>>公升。 
 

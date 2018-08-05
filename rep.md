@@ -90,49 +90,36 @@ putdocx table tbl_data_1(17,1), colspan(3) halign(left) italic
 putdocx table tbl_data_1(18,1), colspan(3) halign(left) italic
 ~~~~
 
-## 结果
-
 - [Word文件](./examples/data_table_1.docx) 
 - [do-file](./examples/data_table_1.do)
 
-## Nested table
+## 嵌套表格
 
 ~~~~
 	// table may be created in memory using -memtable- option
-regress fuel weight if foreign
+regress 油耗 重量 if 国籍, cformat(%9.4f) 
 putdocx table tbl_f = etable, memtable
-regress fuel weight if !foreign
+regress 油耗 重量 if !国籍, cformat(%9.4f) 
 putdocx table tbl_d = etable, memtable
 	// add tables in memory into cells of another tbale
 putdocx table tbl_l = (2, 2)
-putdocx table tbl_l(1, 1)  = ("Foreign"), halign(center)
-putdocx table tbl_l(1, 2)  = ("Domestic"), halign(center)
+putdocx table tbl_l(1, 1)  = ("国外"), halign(center)
+putdocx table tbl_l(1, 2)  = ("国内"), halign(center)
 putdocx table tbl_l(2, 1)  = table(tbl_f)
 putdocx table tbl_l(2, 2)  = table(tbl_d)	
 ~~~~
 
-## Resulted nested table
+- [Word文件](./examples/nest_table.docx) 
+- [do-file](./examples/nest_table.do)
 
-- [Word document](./examples/nest_table.docx) 
-- [source do-file](./examples/nest_table.do)
+# Stata命令输出 
 
-# Include output from Stata commands 
-
-- Include text file using [docxaddfile](./examples/docxaddfile.ado) 
-- [Word document](./examples/logout.docx) 
-- [source do-file](./examples/logout.do)
+- 用[docxaddfile](./examples/docxaddfile.ado)包括文件 
+- [Word文件](./examples/logout.docx) 
+- [do-file](./examples/logout.do)
 
 
-# Community-contributed software based on **putdocx** 
-
-Some commands on [ssc](https://www.stata.com/support/ssc-installation/)
-
-- sum2docx
-- reg2docx
-- t2docx
-- corr2docx
-
-# A **dyndoc** example 
+# **dyndoc** 
 
 - [dynamic document](./examples/fuel.txt) 
 - [fuel consumption report](./examples/fuel.html) 

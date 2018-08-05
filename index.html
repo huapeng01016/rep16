@@ -96,95 +96,87 @@
 <pre><code>regress 油耗 重量
 putdocx table tbl_reg = etable</code></pre>
 <ul>
-<li><a href="./examples/etable_1.docx">Word document</a></li>
-<li><a href="./examples/etable_1.do">source do-file</a></li>
+<li><a href="./examples/etable_1.docx">Word文件</a></li>
+<li><a href="./examples/etable_1.do">do-file</a></li>
 </ul>
 </section>
-<section id="from-margins" class="level2">
-<h2>From <strong>margins</strong></h2>
-<pre><code>regress fuel weight i.foreign i.rep78
-margins foreign rep78 
+<section id="margins" class="level2">
+<h2><strong>margins</strong></h2>
+<pre><code>regress 油耗 重量 i.国籍 i.维修记录78
+margins 国籍 维修记录78 
 putdocx table tbl_marg = etable</code></pre>
 <ul>
-<li><a href="./examples/etable_3.docx">Word document</a></li>
-<li><a href="./examples/etable_3.do">source do-file</a></li>
+<li><a href="./examples/etable_3.docx">Word文件</a></li>
+<li><a href="./examples/etable_3.do">do-file</a></li>
 </ul>
 </section>
-<section id="from-estimates-table" class="level2">
-<h2>From <strong>estimates table</strong></h2>
-<pre><code>quietly regress fuel weight gear turn
-estimates store model1
-quietly regress fuel weight gear turn foreign
-estimates store model2
-estimates table model1 model2, b(%7.4f) stats(N r2 r2_a) star
+<section id="estimates-table" class="level2">
+<h2><strong>estimates table</strong></h2>
+<pre><code>quietly regress 油耗 重量 变速比 转弯半径
+estimates store 模型1
+quietly regress 油耗 重量 变速比 转弯半径 国籍
+estimates store  模型2
+estimates table 模型1 模型2,    ///
+    varlabel b(%7.4f)           /// 
+    stats(N r2 r2_a) star
 putdocx table tbl_est = etable</code></pre>
 <ul>
-<li><a href="./examples/etable_4.docx">Word document</a></li>
+<li><a href="./examples/etable_4.docx">Word文件</a></li>
 <li><a href="./examples/etable_4.do">source do-file</a></li>
 </ul>
 </section>
-<section id="from-dataset" class="level2">
-<h2>From dataset</h2>
+<section id="从dataset产生表格" class="level2">
+<h2>从dataset产生表格</h2>
 <pre><code>putdocx table tbl_data = data(_all)</code></pre>
 <ul>
-<li><a href="./examples/data_table.docx">Word document</a></li>
-<li><a href="./examples/data_table.do">source do-file</a></li>
+<li><a href="./examples/data_table.docx">Word文件</a></li>
+<li><a href="./examples/data_table.do">do-file</a></li>
 </ul>
 </section>
-<section id="change-table-styles-and-layout" class="level2">
-<h2>Change table styles and layout</h2>
-<pre><code>        // add a table without borders
+<section id="改变表格格式外观" class="level2">
+<h2>改变表格格式外观</h2>
+<pre><code>        // 去除边界
 putdocx table tbl_data_1 = data(_all), border(all,nil)
-        // add a double width line border 
-        // at the bottom of the first row
+        //  改变第一行边界
 putdocx table tbl_data_1(1,.), border(bottom,double)
 putdocx table tbl_data_1(3,.), border(bottom, dotted)
-        // make the first cell of 
-        // the first row span 3 columns
+        // 扩展第一格占三列 
 putdocx table tbl_data_1(1,1), colspan(3) halign(center)
 putdocx table tbl_data_1(14,.), border(top,dotted)
 putdocx table tbl_data_1(17,.), border(top,double)
-        // make the first cells of 17th and 18th 
-        // rows span 3 columns, also make the contents 
-        // of the cells left aligned and italic  
+        // 扩展17，18行第一格占三列，对齐左侧， 斜体 
 putdocx table tbl_data_1(17,1), colspan(3) halign(left) italic
 putdocx table tbl_data_1(18,1), colspan(3) halign(left) italic</code></pre>
-</section>
-<section id="after-change-table-styles-and-layout" class="level2">
-<h2>After change table styles and layout</h2>
 <ul>
-<li><a href="./examples/data_table_1.docx">Word document</a></li>
-<li><a href="./examples/data_table_1.do">source do-file</a></li>
+<li><a href="./examples/data_table_1.docx">Word文件</a></li>
+<li><a href="./examples/data_table_1.do">do-file</a></li>
 </ul>
 </section>
-<section id="nested-table" class="level2">
-<h2>Nested table</h2>
+<section id="嵌套表格" class="level2">
+<h2>嵌套表格</h2>
 <pre><code>    // table may be created in memory using -memtable- option
-regress fuel weight if foreign
+regress 油耗 重量 if 国籍, cformat(%9.4f) 
 putdocx table tbl_f = etable, memtable
-regress fuel weight if !foreign
+regress 油耗 重量 if !国籍, cformat(%9.4f) 
 putdocx table tbl_d = etable, memtable
     // add tables in memory into cells of another tbale
 putdocx table tbl_l = (2, 2)
-putdocx table tbl_l(1, 1)  = (&quot;Foreign&quot;), halign(center)
-putdocx table tbl_l(1, 2)  = (&quot;Domestic&quot;), halign(center)
+putdocx table tbl_l(1, 1)  = (&quot;国外&quot;), halign(center)
+putdocx table tbl_l(1, 2)  = (&quot;国内&quot;), halign(center)
 putdocx table tbl_l(2, 1)  = table(tbl_f)
 putdocx table tbl_l(2, 2)  = table(tbl_d)   </code></pre>
-</section>
-<section id="resulted-nested-table" class="level2">
-<h2>Resulted nested table</h2>
 <ul>
-<li><a href="./examples/nest_table.docx">Word document</a></li>
-<li><a href="./examples/nest_table.do">source do-file</a></li>
+<li><a href="./examples/nest_table.docx">Word文件</a></li>
+<li><a href="./examples/nest_table.do">do-file</a></li>
 </ul>
 </section>
 </section>
-<section id="include-output-from-stata-commands" class="slide level1">
-<h1>Include output from Stata commands</h1>
+<section id="stata命令输出" class="slide level1">
+<h1>Stata命令输出</h1>
 <ul>
-<li>Include text file using <a href="./examples/docxaddfile.ado">docxaddfile</a></li>
-<li><a href="./examples/logout.docx">Word document</a></li>
-<li><a href="./examples/logout.do">source do-file</a></li>
+<li>用<a href="./examples/docxaddfile.ado">docxaddfile</a>包括文件</li>
+<li><a href="./examples/logout.docx">Word文件</a></li>
+<li><a href="./examples/logout.do">do-file</a></li>
 </ul>
 </section>
 <section id="community-contributed-software-based-on-putdocx" class="slide level1">
