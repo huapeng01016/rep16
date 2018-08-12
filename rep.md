@@ -121,24 +121,22 @@ putdocx table tbl_l(2, 2)  = table(tbl_d)
 
 # **dyndoc** 
 
-- [dynamic document](./examples/fuel.txt) 
-- [fuel consumption report](./examples/fuel.html) 
+- [动态文件](./examples/fuel.txt) 
+- [油耗报告](./examples/fuel.html) 
 
 ~~~~
 dyndoc fuel.txt, replace 	
 ~~~~
 	
 
-# Dynamic tags
+# 动态标签
 
 ## dd_do for a block of Stata code
 ````
 <<dd_ignore>>
 <<dd_do>>
-sysuse auto, clear
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
-regress fuel weight
+use examples/auto_zh.dta, clear
+regress 油耗 重量
 <</dd_do>>
 <</dd_ignore>>
 ````
@@ -146,15 +144,13 @@ regress fuel weight
 ##
 ````
 <<dd_do>>
-sysuse auto, clear
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
-regress fuel weight
+use examples/auto_zh.dta, clear
+regress 油耗 重量
 <</dd_do>>
 ````
 
 ##
-Attributes change a tag's behavior
+改变标签属性
 
 ````
 <<dd_ignore>>
@@ -168,27 +164,25 @@ matrix eb = e(b)
 matrix eb = e(b)
 <</dd_do>>
 
-## dd_display for inline Stata results
+## 用dd_display显示Stata结果
 <<dd_ignore>>
-- For every unit increase in weight, a <<dd_display:%9.4f eb[1,1]>> unit
-increase in fuel consumption is predicted.
+- 线性回归结果显示重量每增加一百公斤,每百公里油耗增加<<dd_display:%9.4f eb[1,1]*100>>公升。
 <</dd_ignore>>
 
-> - For every unit increase in weight, a <<dd_display:%9.4f eb[1,1]>> unit
-increase in fuel consumption is predicted.
+> - 线性回归结果显示重量每增加一百公斤,每百公里油耗增加<<dd_display:%9.4f eb[1,1]*100>>公升。
 
 ## dd_graph
 ````
 <<dd_ignore>>
 <<dd_do>>
-scatter fuel weight, mcolor(%50)
+scatter 油耗 重量, mcolor(%50)
 <</dd_do>>
 <<dd_graph:sav(sc_gp100m_weight.png) replace>>
 <</dd_ignore>>
 ````
 
 <<dd_do:quietly>>
-scatter fuel weight, mcolor(%50)
+scatter 油耗 重量, mcolor(%50)
 <</dd_do>>
 
 ##
@@ -224,9 +218,9 @@ when Miles per Gallon increases 20.
 ## Headings
 
 ~~~~
-# H1
-## H2
-### H3
+# Head 1
+## Head 2
+### Head 3
 ~~~~
 
 ## Fenced code block

@@ -27,64 +27,41 @@ use auto_zh, clear
 <</dd_do>>
 ~~~~
 
-## Perform data transformation
-
-We generate a variable, **fuel**, that measures the fuel consumption rate in the unit of 
-Gallons per 100 Miles.  
+## 检查数据
 
 ~~~~
 <<dd_do>>
-generate fuel = 100/mpg
-label variable fuel "Fuel consumption (Gallons per 100 Miles)"
-<</dd_do>>
-~~~~
-
-<<dd_skip_if: ("`details'"=="")>>
-The following explains why Gallons per 100 Mile is a better measurement than 
-Miles per Gallon. Going from a 10 Miles per Gallon car to a 20 Miles per Gallon 
-car saves 5 Gallons per 100 Miles when Miles per Gallon increases 10. Going 
-from a 20 Miles per Gallon car to a 40 Miles per Gallon car *only* saves 2.5 Gallons 
-per 100 Miles when Miles per Gallon increases 20.      
-<<dd_skip_end>>
-
-## Examine the variables
-
-We examine variables for possible errors in the data.
-
-~~~~
-<<dd_do>>
-describe fuel weight
+describe 油耗 重量
 <</dd_do>>
 ~~~~
 
 <<dd_do:quietly>>
-assert fuel > 0 
+assert 油耗 > 0 
 <</dd_do>>
 
 ~~~~
 <<dd_do>>
-summarize weight
+summarize 重量
 <</dd_do>>
 ~~~~
 
-The variable **weight** has minimum value <<dd_display: %4.2f `r(min)'>>, maximum value 
-<<dd_display: %4.2f `r(max)'>>, and range <<dd_display: %4.2f `r(max)'-`r(min)'>>.
+变量重量的最小值<<dd_display: %4.2f `r(min)'>>,最大值<<dd_display: %4.2f `r(max)'>>,极差<<dd_display: %4.2f `r(max)'-`r(min)'>>。
 
-##  Plot fuel consumption and vehicle weight 
+##  用散点图显示油耗与重量关系 
 
 ~~~~
 <<dd_do>>
-scatter fuel weight, mcolor(blue%50)
+scatter 油耗 重量, mcolor(blue%50)
 <</dd_do>>
 ~~~~
 
-<<dd_graph: sav("sc_gp100m_mpg.png") alt("scatter fuel weight") replace markdown>>
+<<dd_graph: sav("sc_gp100m_mpg.png") alt("油耗重量散点图") replace markdown>>
 
-## Explore relationship between fuel consumption and vehicle weight - linear regression
+## 用线性回归研究油耗与重量关系
 
 ~~~~
 <<dd_do>>
-regress fuel weight
+regress 油耗 重量
 <</dd_do>>
 ~~~~
 
@@ -92,32 +69,31 @@ regress fuel weight
 matrix define eb = e(b)
 <</dd_do>>
 
-The regression shows that for every unit increase in weight, a 
-<<dd_display:%9.4f eb[1,1]>> unit increase in fuel consumption is predicted.
+线性回归结果显示重量每增加一百公斤,每百公里油耗增加<<dd_display:%9.4f eb[1,1]*100>>公升。 
 
-## Produce an HTML table from regression results
+## 用线性回归结果生成HTML表格
 
 <<dd_do>>
 _coef_table, markdown
 <</dd_do>>
 
-## Produce a table from **estimates table**
+## 用**estimates table**生成表格
 
 ~~~~
 <<dd_do>>
-quietly regress fuel weight gear turn
-estimates store model1
-quietly regress fuel weight gear turn foreign
-estimates store model2
-estimates table model1 model2, b(%7.4f) stats(N r2_a) star
+quietly regress 油耗 重量 变速比 转弯半径
+estimates store 模型1
+quietly regress 油耗 重量 变速比 转弯半径 国籍
+estimates store  模型2
+estimates table 模型1 模型2, b(%7.4f) stats(N r2_a) star
 <</dd_do>>
 ~~~~
 
 <<dd_do>>
-estimates table model1 model2, varlabel b(%7.4f) stats(N r2_a) star markdown
+estimates table 模型1 模型2, varlabel b(%7.4f) stats(N r2_a) star markdown
 <</dd_do>>
 
-## Produce a table from community-contributed **esttab**
+## 用**esttab**生成表格
 
 <<dd_do: quietly>>
 cap erase esttab_ex.html
@@ -126,12 +102,12 @@ eststo clear
 
 ~~~~
 <<dd_do>>
-eststo : quietly regress fuel weight gear turn
-eststo : quietly regress fuel weight gear turn foreign
+eststo : quietly regress 油耗 重量 变速比 转弯半径
+eststo : quietly regress 油耗 重量 变速比 转弯半径 国籍
 esttab using esttab_ex.html, label   /// 
 	width(80%) nogaps                ///
-	mtitles("Model 1" "Model 2")       ///
-	title(Regression table using -esttab-) 
+	mtitles("模型1" "模型2")       ///
+	title(线性回归结果) 
 <</dd_do>>
 ~~~~~
 

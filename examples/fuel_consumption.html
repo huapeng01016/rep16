@@ -7,92 +7,82 @@
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 </head>
-<h1><a href="#a-fuel-consumption-study-of-statas-auto-dataset" id="a-fuel-consumption-study-of-statas-auto-dataset">A fuel consumption study of Stata&rsquo;s auto dataset</a></h1>
-<p>We conduct a study of the fuel consumption of cars in Stata&rsquo;s auto dataset.</p>
-<pre><code>. sysuse auto, clear
-(1978 Automobile Data)
+<h1><a href="#stata车辆数据文件中车型的重量和油耗之间关系的对比和分析" id="stata车辆数据文件中车型的重量和油耗之间关系的对比和分析">Stata车辆数据文件中车型的重量和油耗之间关系的对比和分析</a></h1>
+<pre><code>. use auto_zh, clear
+(1978年汽车数据)
 
 </code></pre>
-<h2><a href="#perform-data-transformation" id="perform-data-transformation">Perform data transformation</a></h2>
-<p>We generate a variable, <strong>fuel</strong>, that measures the fuel consumption rate in the unit of Gallons per 100 Miles.</p>
-<pre><code>. generate fuel = 100/mpg
-
-. label variable fuel &quot;Fuel consumption (Gallons per 100 Miles)&quot;
-
-</code></pre>
-<h2><a href="#examine-the-variables" id="examine-the-variables">Examine the variables</a></h2>
-<p>We examine variables for possible errors in the data.</p>
-<pre><code>. describe fuel weight
+<h2><a href="#检查数据" id="检查数据">检查数据</a></h2>
+<pre><code>. describe 油耗 重量
 
               storage   display    value
 variable name   type    format     label      variable label
 --------------------------------------------------------------------------------
-fuel            float   %9.0g                 Fuel consumption (Gallons per 100
-                                                Miles)
-weight          int     %8.0gc                Weight (lbs.)
+油耗            float   %9.0g                 油量消耗(公升每一百公里)
+重量            float   %8.0gc                重量(公斤)
 
 </code></pre>
-<pre><code>. summarize weight
+<pre><code>. summarize 重量
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
-      weight |         74    3019.459    777.1936       1760       4840
+        重量 |         74    1369.603    352.5288   798.3219   2195.385
 
 </code></pre>
-<p>The variable <strong>weight</strong> has minimum value 1760.00, maximum value 4840.00, and range 3080.00.</p>
-<h2><a href="#plot-fuel-consumption-and-vehicle-weight" id="plot-fuel-consumption-and-vehicle-weight">Plot fuel consumption and vehicle weight</a></h2>
-<pre><code>. scatter fuel weight, mcolor(blue%50)
+<p>变量重量的最小值798.32,最大值2195.39,极差1397.06。</p>
+<h2><a href="#用散点图显示油耗与重量关系" id="用散点图显示油耗与重量关系">用散点图显示油耗与重量关系</a></h2>
+<pre><code>. scatter 油耗 重量, mcolor(blue%50)
 
 </code></pre>
-<p><img src="sc_gp100m_mpg.png" alt="scatter fuel weight" /></p>
-<h2><a href="#explore-relationship-between-fuel-consumption-and-vehicle-weight-linear-regression" id="explore-relationship-between-fuel-consumption-and-vehicle-weight-linear-regression">Explore relationship between fuel consumption and vehicle weight - linear regression</a></h2>
-<pre><code>. regress fuel weight
+<p><img src="sc_gp100m_mpg.png" alt="油耗重量散点图" /></p>
+<h2><a href="#用线性回归研究油耗与重量关系" id="用线性回归研究油耗与重量关系">用线性回归研究油耗与重量关系</a></h2>
+<pre><code>. regress 油耗 重量
 
       Source |       SS           df       MS      Number of obs   =        74
 -------------+----------------------------------   F(1, 72)        =    194.71
-       Model |  87.2964969         1  87.2964969   Prob &gt; F        =    0.0000
-    Residual |  32.2797639        72  .448330054   R-squared       =    0.7300
+       Model |  87.2964971         1  87.2964971   Prob &gt; F        =    0.0000
+    Residual |  32.2797637        72  .448330051   R-squared       =    0.7300
 -------------+----------------------------------   Adj R-squared   =    0.7263
        Total |  119.576261        73  1.63803097   Root MSE        =    .66957
 
 ------------------------------------------------------------------------------
-        fuel |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+        油耗 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-      weight |    .001407   .0001008    13.95   0.000      .001206    .0016081
+        重量 |    .003102   .0002223    13.95   0.000     .0026589    .0035452
        _cons |   .7707669   .3142571     2.45   0.017     .1443069    1.397227
 ------------------------------------------------------------------------------
 
 </code></pre>
-<p>The regression shows that for every unit increase in weight, a 0.0014 unit increase in fuel consumption is predicted.</p>
-<h2><a href="#produce-an-html-table-from-regression-results" id="produce-an-html-table-from-regression-results">Produce an HTML table from regression results</a></h2>
+<p>线性回归结果显示重量每增加一百公斤,每百公里油耗增加   0.3102公升。</p>
+<h2><a href="#用线性回归结果生成html表格" id="用线性回归结果生成html表格">用线性回归结果生成HTML表格</a></h2>
 <p>. _coef_table, markdown</p>
 <table>
 <thead>
-<tr><th>fuel        </th><th>      Coef.</th><th>   Std. Err.</th><th>      t </th><th> P&gt;|t|</th><th colspan="2">[95% Conf. Interval]     </th></tr>
+<tr><th>油耗        </th><th>      Coef.</th><th>   Std. Err.</th><th>      t </th><th> P&gt;|t|</th><th colspan="2">[95% Conf. Interval]     </th></tr>
 </thead>
 <tbody>
-<tr><td>weight       </td><td>   .001407 </td><td>  .0001008 </td><td>   13.95 </td><td>  0.000 </td><td>     .001206 </td><td>   .0016081 </td></tr>
+<tr><td>重量         </td><td>   .003102 </td><td>  .0002223 </td><td>   13.95 </td><td>  0.000 </td><td>    .0026589 </td><td>   .0035452 </td></tr>
 <tr><td>_cons        </td><td>  .7707669</td><td>  .3142571 </td><td>    2.45 </td><td>  0.017 </td><td>    .1443069 </td><td>   1.397227 </td></tr>
 </tbody>
 </table>
-<h2><a href="#produce-a-table-from-estimates-table" id="produce-a-table-from-estimates-table">Produce a table from <strong>estimates table</strong></a></h2>
-<pre><code>. quietly regress fuel weight gear turn
+<h2><a href="#用estimates-table生成表格" id="用estimates-table生成表格">用<strong>estimates table</strong>生成表格</a></h2>
+<pre><code>. quietly regress 油耗 重量 变速比 转弯半径
 
-. estimates store model1
+. estimates store 模型1
 
-. quietly regress fuel weight gear turn foreign
+. quietly regress 油耗 重量 变速比 转弯半径 国籍
 
-. estimates store model2
+. estimates store  模型2
 
-. estimates table model1 model2, b(%7.4f) stats(N r2_a) star
+. estimates table 模型1 模型2, b(%7.4f) stats(N r2_a) star
 
 ----------------------------------------
-    Variable |   model1       model2    
+    Variable |   模型1        模型2     
 -------------+--------------------------
-      weight |  0.0014***    0.0013***  
-  gear_ratio |  0.1706      -0.3367     
-        turn |  0.0243       0.0613     
-     foreign |               0.8650***  
+        重量 |  0.0030***    0.0028***  
+      变速比 |  0.1706      -0.3367     
+    转弯半径 |  0.0798       0.2010     
+        国籍 |               0.8650***  
        _cons | -0.5814      -0.4661     
 -------------+--------------------------
            N |      74           74     
@@ -101,49 +91,49 @@ weight          int     %8.0gc                Weight (lbs.)
 legend: * p&lt;0.05; ** p&lt;0.01; *** p&lt;0.001
 
 </code></pre>
-<p>. estimates table model1 model2, varlabel b(%7.4f) stats(N r2_a) star markdown</p>
+<p>. estimates table 模型1 模型2, varlabel b(%7.4f) stats(N r2_a) star markdown</p>
 <table>
 <thead>
-<tr><th>                 Variable </th><th>   model1   </th><th>   model2   </th></tr>
+<tr><th>                 Variable </th><th>   模型1    </th><th>   模型2    </th></tr>
 </thead>
 <tbody>
-<tr><td>            Weight (lbs.) </td><td>  0.0014*** </td><td>  0.0013*** </td></tr>
-<tr><td>               Gear Ratio </td><td>  0.1706    </td><td> -0.3367    </td></tr>
-<tr><td>        Turn Circle (ft.) </td><td>  0.0243    </td><td>  0.0613    </td></tr>
-<tr><td>                 Car type </td><td>            </td><td>  0.8650*** </td></tr>
+<tr><td>               重量(公斤) </td><td>  0.0030*** </td><td>  0.0028*** </td></tr>
+<tr><td>                   变速比 </td><td>  0.1706    </td><td> -0.3367    </td></tr>
+<tr><td>             转弯半径(米) </td><td>  0.0798    </td><td>  0.2010    </td></tr>
+<tr><td>                     国籍 </td><td>            </td><td>  0.8650*** </td></tr>
 <tr><td>                 Constant </td><td> -0.5814    </td><td> -0.4661    </td></tr>
 <tr><td>                        N </td><td>      74    </td><td>      74    </td></tr>
 <tr><td>                     r2_a </td><td>  0.7218    </td><td>  0.7637    </td></tr>
 </tbody>
 </table>
 <p>legend: * p&lt;0.05; ** p&lt;0.01; *** p&lt;0.001</p>
-<h2><a href="#produce-a-table-from-community-contributed-esttab" id="produce-a-table-from-community-contributed-esttab">Produce a table from community-contributed <strong>esttab</strong></a></h2>
-<pre><code>. eststo : quietly regress fuel weight gear turn
+<h2><a href="#用esttab生成表格" id="用esttab生成表格">用<strong>esttab</strong>生成表格</a></h2>
+<pre><code>. eststo : quietly regress 油耗 重量 变速比 转弯半径
 (est1 stored)
 
-. eststo : quietly regress fuel weight gear turn foreign
+. eststo : quietly regress 油耗 重量 变速比 转弯半径 国籍
 (est2 stored)
 
 . esttab using esttab_ex.html, label   /// 
 &gt;         width(80%) nogaps                ///
-&gt;         mtitles(&quot;Model 1&quot; &quot;Model 2&quot;)       ///
-&gt;         title(Regression table using -esttab-) 
+&gt;         mtitles(&quot;模型1&quot; &quot;模型2&quot;)       ///
+&gt;         title(线性回归结果) 
 (output written to esttab_ex.html)
 
 </code></pre>
 <table border="0" width="80%">
-<caption>Regression table using -esttab-</caption>
+<caption>线性回归结果</caption>
 <tr><td colspan=3><hr></td></tr>
 <tr><td>                    </td><td>         (1)              </td><td>         (2)              </td></tr>
-<tr><td>                    </td><td>     Model 1              </td><td>     Model 2              </td></tr>
+<tr><td>                    </td><td>       模型1              </td><td>       模型2              </td></tr>
 <tr><td colspan=3><hr></td></tr>
-<tr><td>Weight (lbs.)       </td><td>     0.00136<sup>***</sup></td><td>     0.00126<sup>***</sup></td></tr>
+<tr><td>重量(公斤)          </td><td>     0.00301<sup>***</sup></td><td>     0.00278<sup>***</sup></td></tr>
 <tr><td>                    </td><td>      (6.09)              </td><td>      (6.06)              </td></tr>
-<tr><td>Gear Ratio          </td><td>       0.171              </td><td>      -0.337              </td></tr>
+<tr><td>变速比              </td><td>       0.171              </td><td>      -0.337              </td></tr>
 <tr><td>                    </td><td>      (0.64)              </td><td>     (-1.19)              </td></tr>
-<tr><td>Turn Circle (ft.)   </td><td>      0.0243              </td><td>      0.0613              </td></tr>
+<tr><td>转弯半径(米)        </td><td>      0.0798              </td><td>       0.201              </td></tr>
 <tr><td>                    </td><td>      (0.70)              </td><td>      (1.81)              </td></tr>
-<tr><td>Car type            </td><td>                          </td><td>       0.865<sup>***</sup></td></tr>
+<tr><td>国籍                </td><td>                          </td><td>       0.865<sup>***</sup></td></tr>
 <tr><td>                    </td><td>                          </td><td>      (3.66)              </td></tr>
 <tr><td>Constant            </td><td>      -0.581              </td><td>      -0.466              </td></tr>
 <tr><td>                    </td><td>     (-0.38)              </td><td>     (-0.33)              </td></tr>
