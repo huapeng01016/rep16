@@ -1,7 +1,7 @@
 # 使用Stata生成可重复报告
 
 ##  [彭华@StataCorp][hpeng]
-### 2017 Stata 中国用户大会 
+### 2018 Stata 中国用户大会 
 ### [https://huapeng01016.github.io/China18/](https://huapeng01016.github.io/China18/)
 
 # Stata可重复研究与报告
