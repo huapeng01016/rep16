@@ -1,4 +1,4 @@
-# Incorporating Stata into reproducible documents
+# 使用Stata生成可重复报告
 
 ##  [彭华@StataCorp][hpeng]
 ### 2017 Stata 中国用户大会 
@@ -189,9 +189,9 @@ scatter 油耗 重量, mcolor(%50)
 #### <<dd_graph:sav(sc_gp100m_weight.png) height(400) replace>>
 
 
-# More dynamic tags
+# 更多动态标签
 
-## Display contents based on condition
+## 条件标签
 ````
 <<dd_ignore>>
 <<dd_skip_if: ("`details'"=="")>>
@@ -205,7 +205,7 @@ when Miles per Gallon increases 20.
 <</dd_ignore>>
 ````
 
-## Include a text file
+## 加入文本文件
 
 ````
 <<dd_ignore>>
@@ -213,41 +213,41 @@ when Miles per Gallon increases 20.
 <</dd_ignore>>
 ````
 
-# Some Markdown syntax
+# Markdown
 
-## Headings
-
-~~~~
-# Head 1
-## Head 2
-### Head 3
-~~~~
-
-## Fenced code block
+## 标题
 
 ~~~~
-Use "~~~~" or "````" for fenced code block
+# 标题 1
+## 标题 2
+### 标题 3
 ~~~~
 
-## Emphasis
+## 代码块
 
 ~~~~
-Use asterisks (*) and underscores (_) for emphasis. 
+"~~~~" 或 "````"代码块
 ~~~~
 
-## Image
+## 重点
+
+~~~~
+asterisks (*) underscores (_)重点 
+~~~~
+
+## 图像
 
 ~~~~
 ![Alt text](/path/to/img.jpg "Optional title")
 ~~~~
 
-## Link
+## 链接
 
 ~~~~
 This is [an example](http://example.com/ "Title") link.
 ~~~~
 
-# A longer example
+# Example 2
 
 - [web page](./examples/fuel_consumption.html)
 - [dynamic document](./examples/fuel_consumption.txt) 
@@ -256,11 +256,9 @@ This is [an example](http://example.com/ "Title") link.
 dyndoc fuel_consumption.txt, replace 
 ~~~~
 
+# **dyndoc** with arguments
 
-# Use arguments in **dyndoc**
-
-Produce a set of different HTML pages from one [dynamic document](./examples/auto_78.txt) 
-with different arguments  
+从一个[动态文件](./examples/auto_78.txt)应用参数生成一组网页
 
 <<dd_do:quietly>>
 use examples/auto_78_img.dta, clear
@@ -273,25 +271,25 @@ forval i=1/`r(N)' {
 }
 <</dd_do>>
 
-# Community-contributed software 
+# 用户开发命令 
 
-Some commands on [ssc](https://www.stata.com/support/ssc-installation/)
-that use [pandoc](http://pandoc.org) to convert Markdown documents:
+[ssc](https://www.stata.com/support/ssc-installation/)
+使用[pandoc](http://pandoc.org) to convert Markdown documents:
 
 - dynpandoc
 - markstat 
 - markdoc 
 - webdoc 
 
-# Use pandoc instead of Stata's **markdown** command
+# 使用pandoc
 
-## From a single [dynamic document](./examples/fuel_cc.txt), we may produce
+## 从[dynamic document](./examples/fuel_cc.txt)生成
 
 - [web page](./examples/fuel_pandoc.html) 
 - [Word document](./examples/fuel_pandoc.docx)
 - [PDF document](./examples/fuel_pandoc.pdf)
 
-## The commands used are 
+## 命令
 ~~~~
 	// web page
 dynpandoc fuel_cc.txt, saving(fuel_pandoc.html) /// 
@@ -305,14 +303,12 @@ dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf)  ///
 		from(markdown) replace
 ~~~~
 
-# Recap
+# 总结
 
-- Stata tools for reproducible research 
-- **putdocx** to generate Word documents 
-- **dyndoc** to generate web pages
-- **putpdf** to generate PDF files
-- Many  community-contributed packages
+- **putdocx**生成Word文件 
+- **dyndoc**生成网页web pages
+- **putpdf**生成PDF文件
 
-# Thanks!
+# 谢谢!
 
 [hpeng]: hpeng@stata.com

@@ -51,8 +51,8 @@
 -->
 
 
-<section id="incorporating-stata-into-reproducible-documents" class="slide level1">
-<h1>Incorporating Stata into reproducible documents</h1>
+<section id="使用stata生成可重复报告" class="slide level1">
+<h1>使用Stata生成可重复报告</h1>
 <section id="彭华statacorphpeng" class="level2">
 <h2><a href="hpeng@stata.com">彭华@StataCorp</a></h2>
 <section id="stata-中国用户大会" class="level3">
@@ -248,10 +248,10 @@ scatter 油耗 重量, mcolor(%50)
 </section>
 </section>
 </section>
-<section id="more-dynamic-tags" class="slide level1">
-<h1>More dynamic tags</h1>
-<section id="display-contents-based-on-condition" class="level2">
-<h2>Display contents based on condition</h2>
+<section id="更多动态标签" class="slide level1">
+<h1>更多动态标签</h1>
+<section id="条件标签" class="level2">
+<h2>条件标签</h2>
 <pre><code>&lt;&lt;dd_skip_if: (&quot;`details'&quot;==&quot;&quot;)&gt;&gt;
 The following explains why Gallons per 100 Mile is a better 
 measurement than Miles per Gallon. Going from a 10 Miles per Gallon 
@@ -261,47 +261,47 @@ to a 40 Miles per Gallon car *only* saves 2.5 Gallons per 100 Miles
 when Miles per Gallon increases 20.      
 &lt;&lt;dd_skip_end&gt;&gt;</code></pre>
 </section>
-<section id="include-a-text-file" class="level2">
-<h2>Include a text file</h2>
+<section id="加入文本文件" class="level2">
+<h2>加入文本文件</h2>
 <pre><code>&lt;&lt;dd_include: /path/file&gt;&gt;</code></pre>
 </section>
 </section>
-<section id="some-markdown-syntax" class="slide level1">
-<h1>Some Markdown syntax</h1>
-<section id="headings" class="level2">
-<h2>Headings</h2>
-<pre><code># H1
-## H2
-### H3</code></pre>
+<section id="markdown" class="slide level1">
+<h1>Markdown</h1>
+<section id="标题" class="level2">
+<h2>标题</h2>
+<pre><code># 标题 1
+## 标题 2
+### 标题 3</code></pre>
 </section>
-<section id="fenced-code-block" class="level2">
-<h2>Fenced code block</h2>
-<pre><code>Use &quot;~~~~&quot; or &quot;````&quot; for fenced code block</code></pre>
+<section id="代码块" class="level2">
+<h2>代码块</h2>
+<pre><code>&quot;~~~~&quot; 或 &quot;````&quot;代码块</code></pre>
 </section>
-<section id="emphasis" class="level2">
-<h2>Emphasis</h2>
-<pre><code>Use asterisks (*) and underscores (_) for emphasis. </code></pre>
+<section id="重点" class="level2">
+<h2>重点</h2>
+<pre><code>asterisks (*) underscores (_)重点 </code></pre>
 </section>
-<section id="image" class="level2">
-<h2>Image</h2>
+<section id="图像" class="level2">
+<h2>图像</h2>
 <pre><code>![Alt text](/path/to/img.jpg &quot;Optional title&quot;)</code></pre>
 </section>
-<section id="link" class="level2">
-<h2>Link</h2>
+<section id="链接" class="level2">
+<h2>链接</h2>
 <pre><code>This is [an example](http://example.com/ &quot;Title&quot;) link.</code></pre>
 </section>
 </section>
-<section id="a-longer-example" class="slide level1">
-<h1>A longer example</h1>
+<section id="example-2" class="slide level1">
+<h1>Example 2</h1>
 <ul>
 <li><a href="./examples/fuel_consumption.html">web page</a></li>
 <li><a href="./examples/fuel_consumption.txt">dynamic document</a></li>
 </ul>
 <pre><code>dyndoc fuel_consumption.txt, replace </code></pre>
 </section>
-<section id="use-arguments-in-dyndoc" class="slide level1">
-<h1>Use arguments in <strong>dyndoc</strong></h1>
-<p>Produce a set of different HTML pages from one <a href="./examples/auto_78.txt">dynamic document</a> with different arguments</p>
+<section id="dyndoc-with-arguments" class="slide level1">
+<h1><strong>dyndoc</strong> with arguments</h1>
+<p>从一个<a href="./examples/auto_78.txt">动态文件</a>应用参数生成一组网页</p>
 <ul>
 <li><a href="./examples/cars/AMC%20Concord.html">AMC Concord</a></li>
 <li><a href="./examples/cars/BMW%20320i.html">BMW 320i</a></li>
@@ -311,9 +311,9 @@ when Miles per Gallon increases 20.
 <li><a href="./examples/cars/Toyota%20Celica.html">Toyota Celica</a></li>
 </ul>
 </section>
-<section id="community-contributed-software" class="slide level1">
-<h1>Community-contributed software</h1>
-<p>Some commands on <a href="https://www.stata.com/support/ssc-installation/">ssc</a> that use <a href="http://pandoc.org">pandoc</a> to convert Markdown documents:</p>
+<section id="用户开发命令" class="slide level1">
+<h1>用户开发命令</h1>
+<p><a href="https://www.stata.com/support/ssc-installation/">ssc</a> 使用<a href="http://pandoc.org">pandoc</a> to convert Markdown documents:</p>
 <ul>
 <li>dynpandoc</li>
 <li>markstat</li>
@@ -321,18 +321,18 @@ when Miles per Gallon increases 20.
 <li>webdoc</li>
 </ul>
 </section>
-<section id="use-pandoc-instead-of-statas-markdown-command" class="slide level1">
-<h1>Use pandoc instead of Stata’s <strong>markdown</strong> command</h1>
-<section id="from-a-single-dynamic-document-we-may-produce" class="level2">
-<h2>From a single <a href="./examples/fuel_cc.txt">dynamic document</a>, we may produce</h2>
+<section id="使用pandoc" class="slide level1">
+<h1>使用pandoc</h1>
+<section id="从dynamic-document生成" class="level2">
+<h2>从<a href="./examples/fuel_cc.txt">dynamic document</a>生成</h2>
 <ul>
 <li><a href="./examples/fuel_pandoc.html">web page</a></li>
 <li><a href="./examples/fuel_pandoc.docx">Word document</a></li>
 <li><a href="./examples/fuel_pandoc.pdf">PDF document</a></li>
 </ul>
 </section>
-<section id="the-commands-used-are" class="level2">
-<h2>The commands used are</h2>
+<section id="命令" class="level2">
+<h2>命令</h2>
 <pre><code>    // web page
 dynpandoc fuel_cc.txt, saving(fuel_pandoc.html) /// 
         from(markdown) replace  
@@ -345,18 +345,16 @@ dynpandoc fuel_cc.txt, saving(fuel_pandoc.pdf)  ///
         from(markdown) replace</code></pre>
 </section>
 </section>
-<section id="recap" class="slide level1">
-<h1>Recap</h1>
+<section id="总结" class="slide level1">
+<h1>总结</h1>
 <ul>
-<li>Stata tools for reproducible research</li>
-<li><strong>putdocx</strong> to generate Word documents</li>
-<li><strong>dyndoc</strong> to generate web pages</li>
-<li><strong>putpdf</strong> to generate PDF files</li>
-<li>Many community-contributed packages</li>
+<li><strong>putdocx</strong>生成Word文件</li>
+<li><strong>dyndoc</strong>生成网页web pages</li>
+<li><strong>putpdf</strong>生成PDF文件</li>
 </ul>
 </section>
-<section id="thanks" class="slide level1">
-<h1>Thanks!</h1>
+<section id="谢谢" class="slide level1">
+<h1>谢谢!</h1>
 </section>
 </div>
 </div>
