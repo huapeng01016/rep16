@@ -91,42 +91,92 @@
 </ul>
 </section>
 </section>
+<section id="dyndoc" class="slide level1">
+<h1><strong>dyndoc</strong></h1>
+<pre><code>dyndoc fuel_consumption.txt, replace    </code></pre>
+<ul>
+<li><a href="./examples/fuel_consumption.txt">动态文件</a></li>
+<li><a href="./examples/fuel_consumption.html">油耗报告</a></li>
+</ul>
+</section>
+<section id="生成docx" class="slide level1">
+<h1>生成docx</h1>
+<pre><code>dyndoc fuel_consumption.txt, docx replace   </code></pre>
+<ul>
+<li><a href="./examples/fuel_consumption.txt">动态文件</a></li>
+<li><a href="./examples/fuel_consumption.docx">油耗报告</a></li>
+</ul>
+</section>
+<section id="html2docx" class="slide level1">
+<h1><strong>html2docx</strong></h1>
+<pre><code>html2docx fuel_consumption.html, replace    </code></pre>
+<ul>
+<li><a href="./examples/fuel_consumption.html">HTML file</a></li>
+<li><a href="./examples/fuel_consumption.docx">油耗报告</a></li>
+<li><a href="./examples/中国用户大会.docx">大会首页</a></li>
+</ul>
+</section>
+<section id="docx2pdf" class="slide level1">
+<h1><strong>docx2pdf</strong></h1>
+<pre><code>docx2pdf fuel_consumption.docx, replace     </code></pre>
+<ul>
+<li><a href="./examples/fuel_consumption.docx">油耗报告</a></li>
+<li><a href="./examples/fuel_consumption.pdf">PDF</a></li>
+</ul>
+</section>
 <section id="putdocx" class="slide level1">
 <h1><strong>putdocx</strong></h1>
+<pre><code>do fuel_consumption.do</code></pre>
 <ul>
-<li><a href="./examples/fuel_consumption.docx">Word文件</a></li>
+<li><a href="./examples/fuel_consumption_1.docx">Word文件</a></li>
 <li><a href="./examples/fuel_consumption.do">do-file</a></li>
 </ul>
 </section>
 <section id="putdocx-textblock" class="slide level1">
 <h1><strong>putdocx textblock</strong></h1>
-<p><strong>somthing</strong></p>
+<section id="begin" class="level2">
+<h2><strong>begin</strong></h2>
+<pre><code>putdocx textblock begin
+我们希望研究1978车辆数据中两个变量&lt;&lt;dd_docx_display bold:&quot;油耗&quot;&gt;&gt;
+和&lt;&lt;dd_docx_display bold:&quot;重量&quot;&gt;&gt;之间的关系。
+putdocx textblock end</code></pre>
 </section>
-<section id="headers-and-footers" class="slide level1">
-<h1>headers and footers</h1>
-<p><strong>something</strong></p>
+<section id="end" class="level2">
+<h2><strong>end</strong></h2>
+<pre><code>putdocx paragraph
+putdocx textblock append
+我们检查&lt;&lt;dd_docx_display bold:&quot;油耗&quot;&gt;&gt;
+和&lt;&lt;dd_docx_display bold underline:&quot;重量&quot;&gt;&gt;
+的摘要统计数据。
+putdocx textblock end
+
+summarize 油耗
+
+putdocx textblock append
+从摘要统计数据看出,变量&lt;&lt;dd_docx_display bold:&quot;油耗&quot;&gt;&gt;
+的最小值&lt;&lt;dd_docx_display italic: %4.2f `r(min)&#39;&gt;&gt;,
+最大值&lt;&lt;dd_docx_display italic: %4.2f `r(max)&#39;&gt;&gt;,
+极差&lt;&lt;dd_docx_display italic: %4.2f `r(max)&#39;-`r(min)&#39;&gt;&gt;;
+putdocx textblock end</code></pre>
 </section>
-<section id="page-numbers" class="slide level1">
-<h1>page numbers</h1>
-<p><strong>something</strong></p>
 </section>
-<section id="dyndoc" class="slide level1">
-<h1><strong>dyndoc</strong></h1>
-<ul>
-<li><a href="./examples/fuel.txt">动态文件</a></li>
-<li><a href="./examples/fuel.html">油耗报告</a></li>
-</ul>
-<pre><code>dyndoc fuel.txt, replace    </code></pre>
+<section id="headers-footers-and-page-numbers" class="slide level1">
+<h1>headers, footers and page numbers</h1>
+<section id="putdocx-begin" class="level2">
+<h2><strong>putdocx begin</strong></h2>
+<pre><code>putdocx begin, header(info) footer(china19) pagenum(decimal)</code></pre>
 </section>
-<section id="生成docx" class="slide level1">
-<h1>生成docx</h1>
-<pre><code>dyndoc fuel.txt, docx replace   </code></pre>
+<section id="header" class="level2">
+<h2>header</h2>
+<pre><code>putdocx paragraph, toheader(info)
+putdocx text (&quot;彭华 StataCorp LLC&quot;)</code></pre>
 </section>
-<section id="html2docx" class="slide level1">
-<h1><strong>html2docx</strong></h1>
+<section id="footer-with-a-table-and-page-numbers" class="level2">
+<h2>footer with a table and page numbers</h2>
+<pre><code>putdocx table china19 = (1, 2), border(all, nil) tofooter(china19)
+putdocx table china19(1,1) = (&quot;2019中国用户大会&quot;), halign(left)  
+putdocx table china19(1,2) = (&quot;page: &quot;), pagenumber halign(right)  </code></pre>
 </section>
-<section id="docx2pdf" class="slide level1">
-<h1><strong>docx2pdf</strong></h1>
 </section>
 <section id="谢谢" class="slide level1">
 <h1>谢谢!</h1>
