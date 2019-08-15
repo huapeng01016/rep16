@@ -1,6 +1,7 @@
 <<dd_version: 1>>
 
 <head>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="stmarkdown.css">
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
